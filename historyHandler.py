@@ -1,5 +1,0 @@
-
-def textReader():
-    print("reader")
-    
-
