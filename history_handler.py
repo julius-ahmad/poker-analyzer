@@ -2,6 +2,7 @@ import glob
 import os
 MAX_PLAYERS = 9
 
+
 def read_history(pathname):
     """
     Reads hand histories and stores each session into a list.
@@ -19,12 +20,7 @@ def read_history(pathname):
     return sessions
 
 
-def wins_losses(sessions, username):
-    """
-    For now, I am just looking at game summaries.
-    Seat 1 is always button for zoom only. Can calculate position from there
-    :return:
-    """
+def summarizer(sessions):
     games = {'summary': [], 'cards': []}
 
     for ses in sessions:
@@ -38,6 +34,17 @@ def wins_losses(sessions, username):
                 games['summary'].append(game)
             elif ses[i] == '*** HOLE CARDS ***\n':
                 games['cards'].append(ses[i + 1][-8:-1])
+
+    return games
+
+
+def wins_losses(sessions, username):
+    """
+    For now, I am just looking at game summaries.
+    Seat 1 is always button for zoom only. Can calculate position from there
+    :return:
+    """
+    games = summarizer(sessions)
 
     positions = {'button': {'won': 0, 'lost': 0}, 'small blind': {'won': 0, 'lost': 0}, 'big blind':
         {'won': 0, 'lost': 0}, 'UTG': {'won': 0, 'lost': 0}, 'UTG+1': {'won': 0, 'lost': 0}, 'MP': {'won': 0, 'lost': 0}
